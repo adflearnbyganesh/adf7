@@ -1,0 +1,19 @@
+{
+	"name": "AzureSqltestdb",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=testsqlservergp.database.windows.net;Initial Catalog=testdb;User ID=ganeshadmin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVaultdev",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "Sqlpasssord"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}
