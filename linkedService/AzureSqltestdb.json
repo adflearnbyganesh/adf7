@@ -1,12 +1,19 @@
 {
 	"name": "AzureSqltestdb",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=testsqlservergp.database.windows.net;initial catalog=testdb;user id=ganeshadmin",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDRDODc4QTFFLUZCOTQtNEY3NC1BQjM3LTlGMUEwNDRCNUVEMV8xZGQzZWM0OS0yNWYyLTRiOTgtODliMC01NGZjY2I0MzQwY2UiDQp9"
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=testsqlservergp.database.windows.net;Initial Catalog=testdb;User ID=ganeshadmin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVaultdev",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "Sqlpasssord"
+			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
