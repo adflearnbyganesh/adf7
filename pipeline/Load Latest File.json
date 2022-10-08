@@ -133,7 +133,7 @@
 							],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "LastFileName",
+								"variableName": "LastModifiedTime",
 								"value": {
 									"value": "@activity('Get Metadata Last Modified').output.lastModified",
 									"type": "Expression"
