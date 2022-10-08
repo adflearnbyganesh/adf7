@@ -110,9 +110,9 @@
 										"dependsOn": [],
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "LastModifiedTime",
+											"variableName": "LastFileName",
 											"value": {
-												"value": "@activity('Get Metadata Last Modified').output.lastModified",
+												"value": "@activity('Get Metadata Last Modified').output.itemName",
 												"type": "Expression"
 											}
 										}
@@ -121,7 +121,7 @@
 							}
 						},
 						{
-							"name": "Set variable2",
+							"name": "Set variable3",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
@@ -135,7 +135,7 @@
 							"typeProperties": {
 								"variableName": "LastFileName",
 								"value": {
-									"value": "@activity('Get Metadata Last Modified').output.itemName",
+									"value": "@activity('Get Metadata Last Modified').output.lastModified",
 									"type": "Expression"
 								}
 							}
