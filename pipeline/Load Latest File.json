@@ -100,7 +100,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(item().lastModified,variables('LastModifiedTime'))",
+									"value": "@greater(activity('Get Metadata Last Modified').output.lastModified,variables('LastModifiedTime'))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
