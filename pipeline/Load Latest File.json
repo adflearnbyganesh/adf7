@@ -110,7 +110,7 @@
 										"dependsOn": [],
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "LastModifiedTime",
+											"variableName": "LastFileName",
 											"value": {
 												"value": "@activity('Get Metadata Last Modified').output.itemName",
 												"type": "Expression"
