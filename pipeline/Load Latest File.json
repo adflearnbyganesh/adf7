@@ -105,12 +105,12 @@
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Set variable1",
+										"name": "Set variable FileName",
 										"type": "SetVariable",
 										"dependsOn": [],
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "LastFileName",
+											"variableName": "LastModifiedTime",
 											"value": {
 												"value": "@activity('Get Metadata Last Modified').output.itemName",
 												"type": "Expression"
@@ -121,7 +121,7 @@
 							}
 						},
 						{
-							"name": "Set variable3",
+							"name": "Set variable LastModifed",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
