@@ -10,6 +10,20 @@
 						"type": "DatasetReference"
 					},
 					"name": "sourceFile"
+				},
+				{
+					"dataset": {
+						"referenceName": "StorageEmpFileActual",
+						"type": "DatasetReference"
+					},
+					"name": "sourceFilelookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "sql_emp",
+						"type": "DatasetReference"
+					},
+					"name": "sourceTableLookup"
 				}
 			],
 			"sinks": [
@@ -19,9 +33,32 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "sql_emp",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "isActiveDerive"
+				},
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          id as string,",
@@ -31,6 +68,39 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceFile",
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          city as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceFilelookup",
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          city as string,",
+				"          isActive as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> sourceTableLookup",
+				"sourceFilelookup, sourceTableLookup lookup(sourceFilelookup@id == sourceTableLookup@id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 filter(!isNull(sourceTableLookup@id)) ~> filter1",
+				"filter1 alterRow(updateIf(1==1)) ~> alterRow1",
+				"alterRow1 derive(isActiveModified = 0) ~> isActiveDerive",
+				"isActiveDerive select(mapColumn(",
+				"          id = sourceFilelookup@id,",
+				"          name = sourceFilelookup@name,",
+				"          city = sourceFilelookup@city,",
+				"          isActiveModified",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
 				"sourceFile sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -46,7 +116,30 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as string,",
+				"          name as string,",
+				"          city as string,",
+				"          isActive as boolean",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:['id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          id,",
+				"          name,",
+				"          city,",
+				"          isActive = isActiveModified",
+				"     )) ~> sink2"
 			]
 		}
 	}
