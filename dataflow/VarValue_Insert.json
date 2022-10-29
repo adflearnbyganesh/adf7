@@ -30,6 +30,9 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "rank1"
 				}
 			],
 			"scriptLines": [
@@ -48,7 +51,9 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 derive(dListofUsernew = $para_variablevalue) ~> derivedColumn1",
-				"derivedColumn1 filter(distinct(dListofUsernew)) ~> filter1",
+				"rank1 filter(equals(rn, 1)) ~> filter1",
+				"derivedColumn1 rank(asc(ListofUsernew, true),",
+				"     output(rn as long)) ~> rank1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
