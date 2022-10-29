@@ -8,7 +8,7 @@
 		"parameters": {
 			"FileName": {
 				"type": "string",
-				"defaultValue": "emp1.csv"
+				"defaultValue": "Listofusers.txt"
 			}
 		},
 		"annotations": [],
@@ -28,6 +28,11 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "ListofUser",
+				"type": "String"
+			}
+		]
 	}
 }
