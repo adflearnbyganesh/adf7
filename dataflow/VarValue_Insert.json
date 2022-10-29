@@ -27,11 +27,14 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
 				"parameters{",
-				"     para_variablevalue as string",
+				"     para_variablevalue as string ('ganesh,arti')",
 				"}",
 				"source(output(",
 				"          ListofUser as string",
@@ -44,8 +47,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 derive(ListofUsernew = $para_variablevalue) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"select1 derive(dListofUsernew = $para_variablevalue) ~> derivedColumn1",
+				"derivedColumn1 filter(distinct(dListofUsernew)) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -57,7 +61,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          ListofUsernew",
+				"          ListofUsernew = dListofUsernew",
 				"     )) ~> sink1"
 			]
 		}
