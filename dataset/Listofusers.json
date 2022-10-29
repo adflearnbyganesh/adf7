@@ -1,0 +1,16 @@
+{
+	"name": "Listofusers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqltestdb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "UserList"
+		}
+	}
+}
