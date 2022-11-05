@@ -1,0 +1,31 @@
+{
+	"name": "Multi_Sheet_Excel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "devBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Sheetindex": {
+				"type": "int",
+				"defaultValue": 0
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Multi Excel Sheet.xlsx",
+				"folderPath": "emp",
+				"container": "data"
+			},
+			"sheetIndex": {
+				"value": "@dataset().Sheetindex",
+				"type": "Expression"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
