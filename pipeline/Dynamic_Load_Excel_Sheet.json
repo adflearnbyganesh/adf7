@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('isError'),'true')",
+						"value": "@equals(variables('isError'),true)",
 						"type": "Expression"
 					},
 					"activities": [
