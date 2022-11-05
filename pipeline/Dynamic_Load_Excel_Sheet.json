@@ -65,22 +65,81 @@
 									"type": "DatasetReference"
 								}
 							]
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "tempCounter",
+								"value": {
+									"value": "@string(add(int(variables('Counter')),1))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Counter",
+								"value": {
+									"value": "@variables('tempCounter')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable3",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "isError",
+								"value": {
+									"value": "@bool(1)",
+									"type": "Expression"
+								}
+							}
 						}
 					],
 					"timeout": "0.12:00:00"
 				}
 			}
 		],
-		"parameters": {
-			"tempCounter": {
-				"type": "int"
-			}
-		},
 		"variables": {
 			"isError": {
-				"type": "String"
+				"type": "Boolean"
 			},
 			"Counter": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"tempCounter": {
 				"type": "String",
 				"defaultValue": "0"
 			}
