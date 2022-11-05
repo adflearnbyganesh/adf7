@@ -8,6 +8,10 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('isError'),'true')",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Copy data1",
