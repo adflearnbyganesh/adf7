@@ -133,7 +133,8 @@
 		],
 		"variables": {
 			"isError": {
-				"type": "Boolean"
+				"type": "Boolean",
+				"defaultValue": false
 			},
 			"Counter": {
 				"type": "String",
